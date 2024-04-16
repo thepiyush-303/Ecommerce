@@ -6,6 +6,7 @@ const server_config = require("./config/serverConfig");
 const db_config = require("./config/db.config");
 const bcrypt = require("bcryptjs");
 const user_model = require("./models/user.model");
+app.use(express.json())
 /**
  * create an admin user at the starting of the application
  * if it is not already present
@@ -30,14 +31,13 @@ async function init() {
         if (user) {
           console.log("Admin user already exists");
         }
-      
         try {
           let newUser = new user_model({
-            name: "Piyush Bhatt",
-            userId: "thepiyush",
-            password: "12345",
-            email: "bhatt@gmail.com",
-            usertype: "COUSTMER",
+            name: "Ayush Bhatt",
+            userId: "thepiyush2",
+            password: bcrypt.hashSync("13e245",5),
+            email: "ta@gmail.com",
+            usertype: "ADMIN",
           });
       
           await newUser.save();
@@ -46,6 +46,10 @@ async function init() {
             console.log("Error while saving new user:", err);
         }
       }
+      /**
+       * stich the route to the server
+       */
+      require("./router/auth.route")(app)
       
 
 /**
